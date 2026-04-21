@@ -1,4 +1,20 @@
 local cmp = require("cmp")
+
+local function set_cmp_highlights()
+	vim.api.nvim_set_hl(0, "CmpPmenu", { fg = "#F2F4F8", bg = "#0F131A" })
+	vim.api.nvim_set_hl(0, "CmpPmenuSel", { fg = "#FFFFFF", bg = "#2C3648", bold = true })
+	vim.api.nvim_set_hl(0, "CmpPmenuSbar", { bg = "#1A2230" })
+	vim.api.nvim_set_hl(0, "CmpPmenuThumb", { bg = "#6C86C2" })
+	vim.api.nvim_set_hl(0, "CmpDoc", { fg = "#E8ECF3", bg = "#0B1016" })
+	vim.api.nvim_set_hl(0, "CmpBorder", { fg = "#8AA4E0", bg = "#0B1016" })
+end
+
+set_cmp_highlights()
+vim.api.nvim_create_autocmd("ColorScheme", {
+	group = vim.api.nvim_create_augroup("CmpHighContrast", { clear = true }),
+	callback = set_cmp_highlights,
+})
+
 cmp.setup({
 	snippet = {
 		expand = function(args)
@@ -6,8 +22,12 @@ cmp.setup({
 		end,
 	},
 	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
+		completion = cmp.config.window.bordered({
+			winhighlight = "Normal:CmpPmenu,FloatBorder:CmpBorder,CursorLine:CmpPmenuSel,Search:None,Pmenu:CmpPmenu,PmenuSel:CmpPmenuSel,PmenuSbar:CmpPmenuSbar,PmenuThumb:CmpPmenuThumb",
+		}),
+		documentation = cmp.config.window.bordered({
+			winhighlight = "Normal:CmpDoc,FloatBorder:CmpBorder,Search:None",
+		}),
 	},
 	mapping = cmp.mapping.preset.insert({
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),

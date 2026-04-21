@@ -1,23 +1,28 @@
 # AGENTS.md
 
 ## Scope and source of truth
-- This repo is a single-user Neovim config, not an app: the only real code entrypoint is `init.lua`.
-- Treat `init.lua` as authoritative behavior; `nvim-pack-lock.json` is generated state (pinned plugin revisions).
+- This repo is a single-user Neovim config, not an app.
+- `init.lua` is the runtime entrypoint and just wires modules under `lua/julio/*`.
+- Treat Lua config files as source of truth; `nvim-pack-lock.json` is generated plugin pin state.
 
 ## Repo layout that matters
-- `init.lua`: all options, keymaps, plugin declarations, colorscheme, Treesitter, completion, and LSP wiring live here.
-- `nvim-pack-lock.json`: lockfile for `vim.pack` plugins declared in `init.lua`.
+- `init.lua`: load order for modules (`config`, `plugins`, `telescope`, `treesitter`, `lsp`, `gitsigns`).
+- `lua/julio/plugins/init.lua`: `vim.pack.add(...)` declarations and explicit `packadd` load order.
+- `lua/julio/lsp/init.lua`: nvim-cmp setup, LSP configs, and `conform.nvim` formatters.
+- `lua/julio/config/init.lua`: editor options + global keymaps.
+- `nvim-pack-lock.json`: lockfile for plugins declared via `vim.pack.add`.
 
 ## Verified workflow for changes
-- Edit `init.lua` directly for config/plugin changes; there are no module boundaries or secondary config files.
-- When changing plugin set or plugin source refs in `vim.pack.add(...)`, expect `nvim-pack-lock.json` to need refresh in Neovim.
-- Keep explicit `vim.cmd("packadd ...")` lines aligned with plugin declarations; this config relies on those manual loads.
+- Make edits in the module that owns the behavior (`lua/julio/*`), not by inlining logic into `init.lua`.
+- For plugin changes, update `lua/julio/plugins/init.lua`; keep `vim.pack.add(...)` entries and `vim.cmd("packadd ...")` lines in sync.
+- If plugin declarations/refs change, refresh `nvim-pack-lock.json` by starting Neovim with this config.
 
 ## Environment and runtime assumptions
 - Config uses `vim.pack.add`, so it assumes a Neovim build with native `vim.pack` support.
-- Treesitter plugin is declared with `build=":TSUpdate"`, and languages are installed in-code via `require('nvim-treesitter').install { ... }`.
-- Rust LSP is explicitly enabled via `vim.lsp.config['rust_analyzer']` + `vim.lsp.enable('rust_analyzer')`; `rust-analyzer` must exist on PATH.
+- Treesitter is declared with `build=":TSUpdate"`; languages are installed in code in `lua/julio/treesitter/init.lua`.
+- LSP servers are configured in `lua/julio/lsp/init.lua`; `rust_analyzer` is explicitly enabled, while `lua_ls` is configured but not explicitly enabled.
+- Formatter tool executables expected on PATH via conform config: `stylua`, `isort`, `black`, `rustfmt`, `prettier`.
 
 ## Validation
 - There is no repo-local test/lint/CI pipeline.
-- Practical verification is launching Neovim and checking startup/runtime errors after edits (especially plugin load order and LSP setup).
+- Practical verification is launching Neovim and checking startup/runtime errors (especially plugin load order and LSP/formatter setup).
