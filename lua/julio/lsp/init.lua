@@ -1,33 +1,21 @@
 local cmp = require("cmp")
 
-local function set_cmp_highlights()
-	vim.api.nvim_set_hl(0, "CmpPmenu", { fg = "#F2F4F8", bg = "#0F131A" })
-	vim.api.nvim_set_hl(0, "CmpPmenuSel", { fg = "#FFFFFF", bg = "#2C3648", bold = true })
-	vim.api.nvim_set_hl(0, "CmpPmenuSbar", { bg = "#1A2230" })
-	vim.api.nvim_set_hl(0, "CmpPmenuThumb", { bg = "#6C86C2" })
-	vim.api.nvim_set_hl(0, "CmpDoc", { fg = "#E8ECF3", bg = "#0B1016" })
-	vim.api.nvim_set_hl(0, "CmpBorder", { fg = "#8AA4E0", bg = "#0B1016" })
-end
-
-set_cmp_highlights()
-vim.api.nvim_create_autocmd("ColorScheme", {
-	group = vim.api.nvim_create_augroup("CmpHighContrast", { clear = true }),
-	callback = set_cmp_highlights,
-})
-
 cmp.setup({
 	snippet = {
+		-- REQUIRED - you must specify a snippet engine
 		expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body)
+			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+			-- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+			-- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+			-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+			-- vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+
+			-- For `mini.snippets` users:
+			-- local insert = MiniSnippets.config.expand.insert or MiniSnippets.default_insert
+			-- insert({ body = args.body }) -- Insert at cursor
+			-- cmp.resubscribe({ "TextChangedI", "TextChangedP" })
+			-- require("cmp.config").set_onetime({ sources = {} })
 		end,
-	},
-	window = {
-		completion = cmp.config.window.bordered({
-			winhighlight = "Normal:CmpPmenu,FloatBorder:CmpBorder,CursorLine:CmpPmenuSel,Search:None,Pmenu:CmpPmenu,PmenuSel:CmpPmenuSel,PmenuSbar:CmpPmenuSbar,PmenuThumb:CmpPmenuThumb",
-		}),
-		documentation = cmp.config.window.bordered({
-			winhighlight = "Normal:CmpDoc,FloatBorder:CmpBorder,Search:None",
-		}),
 	},
 	mapping = cmp.mapping.preset.insert({
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -39,11 +27,30 @@ cmp.setup({
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
 		{ name = "vsnip" }, -- For vsnip users.
+		-- { name = 'luasnip' }, -- For luasnip users.
+		-- { name = 'ultisnips' }, -- For ultisnips users.
+		-- { name = 'snippy' }, -- For snippy users.
 	}, {
 		{ name = "buffer" },
 	}),
+	formatting = {
+		fields = { "abbr", "kind" }, -- <- clave: elimina "menu" y cualquier extra
+	},
 })
 
+-- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
+-- Set configuration for specific filetype.
+--[[ cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'git' },
+    }, {
+      { name = 'buffer' },
+    })
+ })
+ require("cmp_git").setup() ]]
+--
+
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline({ "/", "?" }, {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = {
@@ -51,6 +58,7 @@ cmp.setup.cmdline({ "/", "?" }, {
 	},
 })
 
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(":", {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
@@ -60,6 +68,8 @@ cmp.setup.cmdline(":", {
 	}),
 	matching = { disallow_symbol_nonprefix_matching = false },
 })
+
+-- Set up lspconfig.
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 vim.lsp.config["rust_analyzer"] = {
 	cmd = { "rust-analyzer" },
@@ -69,24 +79,29 @@ vim.lsp.config["rust_analyzer"] = {
 }
 
 vim.lsp.enable("rust_analyzer")
-vim.lsp.config["lua_ls"] = {
-	cmd = { "lua-language-server" },
-	filetypes = { "lua" },
-	root_markers = { { ".luarc.json", ".luarc.jsonc" }, ".git" },
-	settings = {
-		Lua = {
-			runtime = {
-				version = "LuaJIT",
-			},
-		},
-	},
+
+vim.lsp.config["pylsp"] = {
+	cmd = { "pylsp" },
+	filetypes = { "python" },
+	root_markers = { "pyproject.toml", "setup.py", "requirements.txt" },
 	capabilities = capabilities,
 }
+
+vim.lsp.enable("pylsp")
+
+vim.lsp.config["ts_ls"] = {
+	cmd = { "typescript-language-server", "--stdio" },
+	filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+	root_markers = { "tsconfig.json", "jsconfig.json", "package.json" },
+	capabilities = capabilities,
+}
+
+vim.lsp.enable("ts_ls")
 
 require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
-		python = { "isort", "black" },
+		python = { "black" },
 		rust = { "rustfmt", lsp_format = "fallback" },
 		javascript = { "prettier", stop_after_first = true },
 	},

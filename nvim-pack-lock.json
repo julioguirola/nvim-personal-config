@@ -44,10 +44,6 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
-    "rose-pine": {
-      "rev": "9504524e5ed0e326534698f637f9d038ba4cd0ee",
-      "src": "https://github.com/rose-pine/neovim"
-    },
     "telescope.nvim": {
       "rev": "028d9a0695a0cc4cfa893889f8c408ed7ccc8adc",
       "src": "https://github.com/nvim-telescope/telescope.nvim"
