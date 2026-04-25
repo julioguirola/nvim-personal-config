@@ -30,3 +30,5 @@ vim.diagnostic.config({
 	underline = true, -- underlines the problematic code
 	update_in_insert = false,
 })
+
+vim.g.netrw_keepdir = 0

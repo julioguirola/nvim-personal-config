@@ -118,6 +118,7 @@ require("conform").setup({
 		python = { "black" },
 		rust = { "rustfmt", lsp_format = "fallback" },
 		javascript = { "prettier", stop_after_first = true },
+		typescript = { "prettier", stop_after_first = true },
 	},
 })
 

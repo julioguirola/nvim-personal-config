@@ -9,3 +9,13 @@ vim.keymap.set("n", "<leader>fd", function()
 		find_command = { "fdfind", ".", "--type", "d", "--hidden" },
 	})
 end, { desc = "Find directories (fallback)" })
+
+local telescope = require("telescope")
+
+telescope.setup({
+	pickers = {
+		find_files = {
+			hidden = true,
+		},
+	},
+})
