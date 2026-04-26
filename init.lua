@@ -1,5 +1,7 @@
 require("julio.config")
 require("julio.plugins")
+require("julio.multicursor")
+require("julio.theme")
 require("julio.telescope")
 require("julio.treesitter")
 require("julio.lsp")
