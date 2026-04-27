@@ -15,6 +15,7 @@ vim.pack.add({
 	"https://github.com/jake-stewart/multicursor.nvim",
 	"https://github.com/b0o/SchemaStore.nvim",
 	"https://github.com/github/copilot.vim",
+	"https://github.com/windwp/nvim-autopairs",
 })
 
 vim.cmd("packadd plenary.nvim")
@@ -32,3 +33,4 @@ vim.cmd("packadd cmp-cmdline")
 vim.cmd("packadd cmp-vsnip")
 vim.cmd("packadd vim-vsnip")
 vim.cmd("packadd conform.nvim")
+vim.cmd("packadd nvim-autopairs")

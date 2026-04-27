@@ -110,6 +110,8 @@ vim.lsp.config["ts_ls"] = {
 	capabilities = capabilities,
 }
 
+vim.lsp.enable("ts_ls")
+
 vim.lsp.config["jsonls"] = {
 	cmd = { "vscode-json-languageserver", "--stdio" },
 	filetypes = { "json", "jsonc" },
@@ -133,6 +135,7 @@ require("conform").setup({
 		javascript = { "prettier", stop_after_first = true },
 		typescript = { "prettier", stop_after_first = true },
 		json = { "prettier", stop_after_first = true },
+		vue = { "prettier", stop_after_first = true },
 	},
 })
 

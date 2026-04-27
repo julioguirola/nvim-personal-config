@@ -15,6 +15,7 @@ vim.opt.sidescrolloff = 20
 vim.g.netrw_banner = 0
 
 vim.opt.mouse = ""
+vim.opt.guicursor = ""
 
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -32,3 +33,9 @@ vim.diagnostic.config({
 })
 
 vim.g.netrw_keepdir = 0
+
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldmethod = "expr"
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
