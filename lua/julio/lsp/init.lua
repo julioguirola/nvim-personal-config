@@ -105,7 +105,7 @@ vim.lsp.enable("pyright")
 
 vim.lsp.config["ts_ls"] = {
 	cmd = { "typescript-language-server", "--stdio" },
-	filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+	filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "vue" },
 	root_markers = { "tsconfig.json", "jsconfig.json", "package.json" },
 	capabilities = capabilities,
 }
@@ -127,6 +127,15 @@ vim.lsp.config["jsonls"] = {
 
 vim.lsp.enable("jsonls")
 
+vim.lsp.config["gopls"] = {
+	cmd = { "gopls" },
+	filetypes = { "go", "gomod" },
+	root_markers = { "go.mod", ".git" },
+	capabilities = capabilities,
+}
+
+vim.lsp.enable("gopls")
+
 require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
@@ -136,6 +145,7 @@ require("conform").setup({
 		typescript = { "prettier", stop_after_first = true },
 		json = { "prettier", stop_after_first = true },
 		vue = { "prettier", stop_after_first = true },
+		go = { "gofmt", lsp_format = "fallback" },
 	},
 })
 

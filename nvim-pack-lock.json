@@ -40,6 +40,10 @@
       "rev": "154eb5ff5b96d0641307113fa385eaf0d36d9796",
       "src": "https://github.com/ellisonleao/gruvbox.nvim"
     },
+    "mason.nvim": {
+      "rev": "cb8445f8ce85d957416c106b780efd51c6298f89",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
     "multicursor.nvim": {
       "rev": "704b99f10a72cc05d370cfeb294ff83412a8ab55",
       "src": "https://github.com/jake-stewart/multicursor.nvim"

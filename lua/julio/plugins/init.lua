@@ -16,6 +16,7 @@ vim.pack.add({
 	"https://github.com/b0o/SchemaStore.nvim",
 	"https://github.com/github/copilot.vim",
 	"https://github.com/windwp/nvim-autopairs",
+	"https://github.com/mason-org/mason.nvim",
 })
 
 vim.cmd("packadd plenary.nvim")
@@ -34,3 +35,4 @@ vim.cmd("packadd cmp-vsnip")
 vim.cmd("packadd vim-vsnip")
 vim.cmd("packadd conform.nvim")
 vim.cmd("packadd nvim-autopairs")
+vim.cmd("packadd mason.nvim")
