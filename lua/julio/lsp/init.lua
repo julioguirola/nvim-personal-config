@@ -106,7 +106,7 @@ vim.lsp.enable("pyright")
 vim.lsp.config["ts_ls"] = {
 	cmd = { "typescript-language-server", "--stdio" },
 	filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "vue" },
-	root_markers = { "tsconfig.json", "jsconfig.json", "package.json" },
+	root_markers = { "tsconfig.json", "jsconfig.json", "package.json", "tsconfig.node.json", "tsconfig.app.json" },
 	capabilities = capabilities,
 }
 
@@ -138,11 +138,49 @@ vim.lsp.enable("gopls")
 
 vim.lsp.config["ymlsp"] = {
 	cmd = { "yaml-language-server", "--stdio" },
-	filetypes = { "yml", "yaml" },
+	filetypes = { "yaml" },
 	capabilities = capabilities,
 }
 
 vim.lsp.enable("ymlsp")
+
+vim.lsp.config["tw"] = {
+	cmd = { "tailwindcss-language-server", "--stdio" },
+	filetypes = { "vue" },
+	root_markers = { ".git" },
+	capabilities = capabilities,
+}
+
+vim.lsp.enable("tw")
+
+vim.lsp.config["vuels"] = {
+	cmd = { "vls", "--stdio" },
+	filetypes = { "vue", "typescript" },
+	root_markers = { "tsconfig.json", "vite.config.ts", ".git" },
+	settings = {
+		vue = {
+			hybridMode = false,
+		},
+	},
+	capabilities = capabilities,
+}
+
+vim.lsp.enable("vuels")
+
+vim.lsp.config["lua_ls"] = {
+	cmd = { "lua-language-server" },
+	filetypes = { "lua" },
+	root_markers = {
+		".luarc.json",
+		".luarc.jsonc",
+		".luarc.yaml",
+		".luarc.yml",
+		".git",
+	},
+	capabilities = capabilities,
+}
+
+vim.lsp.enable("lua_ls")
 
 require("conform").setup({
 	formatters_by_ft = {

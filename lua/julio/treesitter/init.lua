@@ -8,4 +8,6 @@ require("nvim-treesitter").install({
 	"rust",
 	"html",
 	"yaml",
+	"css",
+	"json",
 })
