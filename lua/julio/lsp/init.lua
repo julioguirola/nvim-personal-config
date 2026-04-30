@@ -36,6 +36,17 @@ cmp.setup({
 	formatting = {
 		fields = { "abbr", "kind" }, -- <- clave: elimina "menu" y cualquier extra
 	},
+	window = {
+		completion = {
+			border = "rounded", -- o "solid", "single", etc.
+			-- Aquí forzamos el highlight del contenido normal del menú
+			winhighlight = "Normal:Pmenu",
+		},
+		documentation = {
+			border = "rounded",
+			winhighlight = "Normal:Pmenu",
+		},
+	},
 })
 
 -- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
@@ -153,19 +164,14 @@ vim.lsp.config["tw"] = {
 
 vim.lsp.enable("tw")
 
--- vim.lsp.config["vuels"] = {
--- 	cmd = { "vls", "--stdio" },
--- 	filetypes = { "vue", "typescript" },
--- 	root_markers = { "tsconfig.json", "vite.config.ts", ".git" },
--- 	settings = {
--- 		vue = {
--- 			hybridMode = false,
--- 		},
--- 	},
--- 	capabilities = capabilities,
--- }
---
--- vim.lsp.enable("vuels")
+vim.lsp.config["vuels"] = {
+	cmd = { "vls", "--stdio" },
+	filetypes = { "vue" },
+	root_markers = { "tsconfig.json", "vite.config.ts", ".git" },
+	capabilities = capabilities,
+}
+
+vim.lsp.enable("vuels")
 
 vim.lsp.config["lua_ls"] = {
 	cmd = { "lua-language-server" },

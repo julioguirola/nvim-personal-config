@@ -10,4 +10,5 @@ require("nvim-treesitter").install({
 	"yaml",
 	"css",
 	"json",
+	"gomod",
 })

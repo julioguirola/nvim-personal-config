@@ -59,6 +59,10 @@ require("rose-pine").setup({
 		-- StatusLine = { fg = "love", bg = "love", blend = 15 },
 		-- VertSplit = { fg = "muted", bg = "muted" },
 		-- Visual = { fg = "base", bg = "text", inherit = false },
+		-- Aquí es donde forzamos el color sólido para el menú de cmp
+		Pmenu = { bg = "surface" }, -- Fondo sólido del menú
+		PmenuSel = { bg = "overlay" }, -- Fondo sólido para item seleccionado
+		PmenuThumb = { bg = "gold" }, -- La barra de scroll (opcional)
 	},
 
 	before_highlight = function(group, highlight, palette)
