@@ -22,6 +22,7 @@
 - Treesitter is declared with `build=":TSUpdate"`; languages are installed in code in `lua/julio/treesitter/init.lua`.
 - LSP servers are configured and enabled in `lua/julio/lsp/init.lua` (includes `rust_analyzer`, `pyright`, `pylsp`, `ts_ls`, `jsonls`, `gopls`, `ymlsp`, `volar`, `lua_ls`).
 - Formatter tool executables expected on PATH via conform config: `stylua`, `black`, `rustfmt`, `prettier`, `gofmt`.
+- Lua LS globals are set in `.luarc.json` (`vim`, `opts`) to avoid diagnostics.
 
 ## Validation
 - There is no repo-local test/lint/CI pipeline.
