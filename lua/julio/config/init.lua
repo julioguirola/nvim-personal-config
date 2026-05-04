@@ -27,6 +27,12 @@ vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
 
+vim.keymap.set("n", "<leader>cA", function()
+	vim.lsp.buf.code_action({
+		context = { only = { "source" } },
+	})
+end)
+
 vim.diagnostic.config({
 	virtual_text = true, -- shows inline after the line
 	signs = true, -- shows icons in the sign column
@@ -43,3 +49,9 @@ vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 
 vim.o.pumblend = 0
+
+vim.keymap.set("n", "<A-k>", ":m.-2<CR>==")
+vim.keymap.set("n", "<A-j>", ":m.+1<CR>==")
+
+vim.keymap.set("v", "<A-j>", ":m'>+1<CR>gv=gv")
+vim.keymap.set("v", "<A-k>", ":m'<-2<CR>gv=gv")

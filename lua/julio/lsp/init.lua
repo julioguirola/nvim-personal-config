@@ -178,8 +178,29 @@ vim.lsp.enable("ymlsp")
 
 vim.lsp.config["tw"] = {
 	cmd = { "tailwindcss-language-server", "--stdio" },
-	filetypes = { "vue" },
-	root_markers = { ".git" },
+	filetypes = {
+		"html",
+		"css",
+		"scss",
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"vue",
+		"svelte",
+	},
+	root_markers = {
+		"tailwind.config.js",
+		"tailwind.config.cjs",
+		"tailwind.config.mjs",
+		"tailwind.config.ts",
+		"postcss.config.js",
+		"postcss.config.cjs",
+		"postcss.config.mjs",
+		"postcss.config.ts",
+		"package.json",
+		".git",
+	},
 	capabilities = capabilities,
 }
 
